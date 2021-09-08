@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  web:
+    build: ./backend
+    command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 8000
+    volumes:
+      - ./backend:/usr/src/app
+    ports:
+      - 8008:8000
+    environment:
+      - ENVIRONMENT=dev
+      - TESTING=0
+#      - DB_URL=postgres://postgres:postgres@web-db:5432/web_dev
+#      - DB_TEST_URL=postgres://postgres:postgres@web-db:5432/web_test
+#    depends_on:
+#      - web-db
+#
+##db section
+#  web-db:
+#    build:
+#      context: ./backend/db
+#      dockerfile: Dockerfile
+#    expose:
+#      - 5432
+#    environment:
+#      - POSTGRES_USER=postgres
+#      - POSTGRES_PASSWORD=postgres
